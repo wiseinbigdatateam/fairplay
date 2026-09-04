@@ -1,0 +1,13 @@
+const url = 'https://fairplay-biz.lovable.app/';
+const res = await fetch(url);
+const html = await res.text();
+console.log(html.slice(0, 12000));
+const imgs = [...html.matchAll(/https?:[^"'\s>]+\.(?:jpg|jpeg|png|webp|svg)/gi)].map((m) => m[0]);
+console.log('\n---IMAGES---');
+[...new Set(imgs)].slice(0, 40).forEach((i) => console.log(i));
+const fonts = [...html.matchAll(/fonts\.googleapis\.com[^"']+/g)].map((m) => m[0]);
+console.log('\n---FONTS---');
+fonts.forEach((f) => console.log(f));
+const cssLinks = [...html.matchAll(/href="([^"]+\.css[^"]*)"/g)].map((m) => m[1]);
+console.log('\n---CSS---');
+cssLinks.forEach((c) => console.log(c));
